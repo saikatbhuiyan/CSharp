@@ -88,3 +88,177 @@ var isEqualto123OrEvenAndSmallerThan20 =
     number == 123 || (number % 2 == 0 && number < 20);
 var isLargerThan5OrSmallerThan0 = number > 5 || number < 5; //the second conditin will not be evaluated due to short-circuiting
 var isSmallerThanZeroAndEven = number < 0 && number % 2 == 0; //the second conditin will not be evaluated due to short-circuiting
+
+
+
+//###################
+//if/else statements
+//###################
+if (userInput.Length <= 3)
+{
+    Console.WriteLine("Short answer");
+}
+else if (userInput.Length < 10)
+{
+    Console.WriteLine("Medium answer");
+}
+else
+{
+    Console.WriteLine("Long answer");
+}
+
+
+
+//###################
+//Scopes
+//###################
+if (userInput.Length == 0)
+{
+    Console.WriteLine("Empty choice");
+    var word = "ABC";
+    int someNumber = 5;
+    if (word.Length > 0)
+    {
+        Console.WriteLine(someNumber); //someNumber is available here
+    }
+}
+else
+{
+    int someNumber = 6; //named the same as the variable inside the "if". It is fine, because those variables live in different scopes
+    Console.WriteLine("Your choice is: " + userInput);
+    //Console.WriteLine(someNumber); //will not compile; someNumber is not available here
+}
+Console.WriteLine("Your choice is: " + userInput);
+
+
+
+//###################
+//Methods - part 1 - void methods
+//###################
+//See 1_TodoList project for more about methods
+void PrintSelectedOption(string selectedOption)
+{
+    Console.WriteLine("Selected option: " + selectedOption);
+}
+
+
+
+//###################
+//Methods - part 2 - non-void methods
+//###################
+//See 1_TodoList project for more about methods
+int Add(int a, int b)
+{
+    return a + b;
+}
+
+bool IsLong(string input)
+{
+    return input.Length > 10;
+}
+
+
+
+//###################
+//Parsing a string to an int
+//###################
+string numberAsText = "123";
+int parsedToInt = int.Parse(numberAsText); //would not work if input was, for example, "abc"
+
+
+
+//###################
+//String interpolation
+//###################
+int a = 4, b = 2, c = 10;
+Console.WriteLine(
+    "First is: " + a + ", second is: " + b + ", third is: " + c);
+
+Console.WriteLine(
+    $"First is: {a}, second is: {b}, third is: {c}");
+
+Console.WriteLine(
+    $"Sum is: {a + b + c}, second is: {b}, third is: {c}");
+
+
+
+//###################
+//Switch statement
+//###################
+//See 1_TodoList project for more about switch
+//###################
+//Char
+//###################
+char ConvertPointsToGrade(int points)
+{
+    switch (points)
+    {
+        case 10:
+        case 9:
+            return 'A';
+        case 8:
+        case 7:
+        case 6:
+            return 'B';
+        case 5:
+        case 4:
+        case 3:
+            return 'C';
+        case 2:
+        case 1:
+            return 'D';
+        case 0:
+            return 'E';
+        default:
+            return '!';
+    }
+}
+
+
+
+//###################
+//While loop
+//###################
+var numberWhileLoop = 0;
+while (numberWhileLoop < 10)
+{
+    numberWhileLoop += 1;
+    Console.WriteLine("Number is: " + numberWhileLoop);
+}
+Console.WriteLine("The loop is finished.");
+
+var someText = "hello";
+while (someText.Length < 15)
+{
+    someText += 'a';
+    Console.WriteLine(someText);
+}
+Console.WriteLine("The loop is finished.");
+
+
+
+//###################
+//Do-while loop
+//###################
+string userInputLong;
+do
+{
+    Console.WriteLine(
+        "Enter input longer than 10 letters");
+    userInputLong = Console.ReadLine();
+} while (userInputLong.Length <= 10);
+
+
+
+//###################
+//For loop
+//###################
+for (int i = 0; i < 5; ++i)
+{
+    Console.WriteLine("Loop run " + i);
+}
+for (int i = 10; i >= 5; --i)
+{
+    Console.WriteLine("Loop run " + i);
+}
+Console.WriteLine("The loop is finished");
