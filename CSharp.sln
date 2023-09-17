@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_Fundamentals", "01_Fundamentals\01_Fundamentals.csproj", "{DFB0859D-3AFC-4B1C-A51D-0D7529DAA1DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_TodoList", "01_TodoList\01_TodoList.csproj", "{3356811D-969D-45F8-A989-2BA545E524D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{DFB0859D-3AFC-4B1C-A51D-0D7529DAA1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFB0859D-3AFC-4B1C-A51D-0D7529DAA1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFB0859D-3AFC-4B1C-A51D-0D7529DAA1DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3356811D-969D-45F8-A989-2BA545E524D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3356811D-969D-45F8-A989-2BA545E524D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3356811D-969D-45F8-A989-2BA545E524D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3356811D-969D-45F8-A989-2BA545E524D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
