@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_NamesBeforeRefactorToSRP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_NamesAfterRefactorToSRP", "02_NamesAfterRefactorToSRP\02_NamesAfterRefactorToSRP.csproj", "{8F842426-E117-404D-A81A-91E8AA69FE4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_DiceRollGame", "02_DiceRollGame\02_DiceRollGame.csproj", "{B253DF11-EC7E-4E3F-AFE8-897B520EBDBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{8F842426-E117-404D-A81A-91E8AA69FE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F842426-E117-404D-A81A-91E8AA69FE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F842426-E117-404D-A81A-91E8AA69FE4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B253DF11-EC7E-4E3F-AFE8-897B520EBDBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B253DF11-EC7E-4E3F-AFE8-897B520EBDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B253DF11-EC7E-4E3F-AFE8-897B520EBDBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B253DF11-EC7E-4E3F-AFE8-897B520EBDBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
