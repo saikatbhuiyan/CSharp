@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_DiceRollGame", "02_DiceR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_PolymorphismInheritanceInterfaces", "03_PolymorphismInheritanceInterfaces\03_PolymorphismInheritanceInterfaces.csproj", "{BCB8CD9F-8095-4CBC-9368-2BDB680E08DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_CookiesCookbook", "03_CookiesCookbook\03_CookiesCookbook.csproj", "{6484490A-C345-4DA9-B032-562B62481F27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{BCB8CD9F-8095-4CBC-9368-2BDB680E08DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB8CD9F-8095-4CBC-9368-2BDB680E08DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB8CD9F-8095-4CBC-9368-2BDB680E08DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6484490A-C345-4DA9-B032-562B62481F27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6484490A-C345-4DA9-B032-562B62481F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6484490A-C345-4DA9-B032-562B62481F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6484490A-C345-4DA9-B032-562B62481F27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
