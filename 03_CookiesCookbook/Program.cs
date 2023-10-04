@@ -280,48 +280,55 @@ public interface IStringsRepository
         string filePath, List<string> names);
 }
 
-public class StringsTextualRepository : IStringsRepository
-{
-    private static readonly string Separator = Environment.NewLine;
-
-    public List<string> Read(string filePath)
-    {
-        if (File.Exists(filePath))
-        {
-            var fileContents = File.ReadAllText(filePath);
-            return fileContents.Split(Separator).ToList();
-        }
-
-        return new List<string>();
-    }
-
-    public void Write(
-        string filePath, List<string> names)
-    {
-        File.WriteAllText(
-            filePath,
-            string.Join(Separator, names));
-    }
-}
-
-public class StringsJsonRepository : IStringsRepository
+public abstract class StringsRepository : IStringsRepository
 {
     public List<string> Read(string filePath)
     {
         if (File.Exists(filePath))
         {
             var fileContents = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<string>>(fileContents);
+            return TextToString(fileContents);
         }
 
         return new List<string>();
     }
+
+    protected abstract List<string> TextToString(string fileContents);
 
     public void Write(
         string filePath, List<string> strings)
     {
         File.WriteAllText(
             filePath,
-            JsonSerializer.Serialize(strings));
+            StringToText(strings));
+    }
+
+    protected abstract string StringToText(List<string> strings);
+}
+
+public class StringsTextualRepository : StringsRepository
+{
+    private static readonly string Separator = Environment.NewLine;
+    protected override List<string> TextToString(string fileContents)
+    {
+        return fileContents.Split(Separator).ToList();
+    }
+    
+    protected override string StringToText(List<string> strings)
+    {
+        return string.Join(Separator, strings);
+    }
+}
+
+public class StringsJsonRepository : StringsRepository
+{
+    protected override List<string> TextToString(string fileContents)
+    {
+        return JsonSerializer.Deserialize<List<string>>(fileContents);
+    }
+    
+    protected override string StringToText(List<string> strings)
+    {
+        return JsonSerializer.Serialize(strings);
     }
 }
