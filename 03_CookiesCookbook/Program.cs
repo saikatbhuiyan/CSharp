@@ -23,17 +23,18 @@ public class CookiesRecipesApp
     {
         var allRecipes = _recipesRepository.Read(filePath);
         _recipesUserInteraction.PrintExistingRecipes(allRecipes);
-
-        /*
+        
         _recipesUserInteraction.PromptToCreateRecipe();
-
+       
         var ingredients = _recipesUserInteraction.ReadIngredientsFromUser();
 
         if (ingredients.Count() > 0)
         {
             var recipe = new Recipe(ingredients);
             allRecipes.Add(recipe);
+            /*
             _recipesRepository.Write(filePath, allRecipes);
+            */
 
             _recipesUserInteraction.ShowMessage("Recipe added:");
             _recipesUserInteraction.ShowMessage(recipe.ToString());
@@ -44,7 +45,6 @@ public class CookiesRecipesApp
                 "No ingredients have been selected. " +
                 "Recipe will not be saved.");
         }
-        */
 
         _recipesUserInteraction.Exit();
     }
@@ -60,8 +60,9 @@ public interface IRecipesUserInteraction
 {
     void ShowMessage(string message);
     void Exit();
-    void PrintExistingRecipe(IEnumerable<Recipe> allRecipes);
-    void PrintExistingRecipes(List<Recipe> allRecipes);
+    void PrintExistingRecipes(IEnumerable<Recipe> allRecipes);
+    void PromptToCreateRecipe();
+    IEnumerable<Ingredient> ReadIngredientsFromUser();
 }
 
 
@@ -87,7 +88,7 @@ public class RecipesConsoleUserInteraction: IRecipesUserInteraction
         Console.ReadKey();
     }
 
-    public void PrintExistingRecipe(IEnumerable<Recipe> allRecipes)
+    public void PrintExistingRecipes(IEnumerable<Recipe> allRecipes)
     {
         if (allRecipes.Count() > 0)
         {
@@ -104,7 +105,7 @@ public class RecipesConsoleUserInteraction: IRecipesUserInteraction
         }
     }
 
-    public void PrintExistingRecipes(List<Recipe> allRecipes)
+    public void PromptToCreateRecipe()
     {
         Console.WriteLine("Create a new cookie recipe! " +
                           "Available ingredients are:");
@@ -113,6 +114,34 @@ public class RecipesConsoleUserInteraction: IRecipesUserInteraction
         {
             Console.WriteLine(ingredient.ToString());
         }
+    }
+
+    public IEnumerable<Ingredient> ReadIngredientsFromUser()
+    {
+        bool shallShop = false;
+        var ingredients = new List<Ingredient>();
+
+        while (!shallShop)
+        {
+            Console.WriteLine("Add an ingredient by its ID, " + "or type anything else if finished");
+
+            var userInput = Console.ReadLine();
+
+            if (int.TryParse(userInput, out int id))
+            {
+                var selectedIngredient = _ingredientsRegister.GetById(id);
+                if (selectedIngredient is not null)
+                {
+                    ingredients.Add(selectedIngredient);
+                }
+            }
+            else
+            {
+                shallShop = true;
+            }
+        }
+
+        return ingredients; 
     }
 }
 
@@ -129,6 +158,19 @@ public class IngredientsRegister
         new Cardamom(),
         new CocoaPowder()
     };
+
+    public Ingredient GetById(int id)
+    {
+        foreach (var ingredient in All)
+        {
+            if (ingredient.Id == id)
+            {
+                return ingredient;
+            }
+        }
+
+        return null;
+    }
 }
 
 public class RecipesRepository: IRecipesRepository
