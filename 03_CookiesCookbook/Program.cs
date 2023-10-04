@@ -1,10 +1,46 @@
-﻿using _03_CookiesCookbook.Recipes;
+﻿using System.Text.Json;
+using _03_CookiesCookbook.Recipes;
+
+const FileFormat Format = FileFormat.Json;
+
+IStringsRepository stringsRepository =
+    Format == FileFormat.Json ? new StringsJsonRepository() : new StringsTextualRepository();
+
+const string FileName = "recipes";
+
+var fileMetaData = new FileMetadata(FileName, Format);
+
+var ingredientsRegister = new IngredientsRegister();
 
 var cookiesRecipesApp = new CookiesRecipesApp(
-    new RecipesRepository(), 
-    new RecipesConsoleUserInteraction(new IngredientsRegister()));
+    new RecipesRepository(stringsRepository, ingredientsRegister), 
+    new RecipesConsoleUserInteraction(ingredientsRegister));
 
-cookiesRecipesApp.Run("recipes.txt");
+cookiesRecipesApp.Run(fileMetaData.ToPath());
+
+public class FileMetadata
+{
+    public string Name { get; }
+    public FileFormat Format { get; }
+    public FileMetadata(string name, FileFormat format)
+    {
+        Name = name;
+        Format = format;
+    }
+
+    public string ToPath() => $"{Name}.{Format.AsFileExtension()}";
+}
+
+public static class FileFormatExtensions
+{
+    public static string AsFileExtension(this FileFormat fileFormat) => fileFormat == FileFormat.Json ? "json" : "txt";
+}
+
+public enum FileFormat
+{
+    Json,
+    Text
+}
 
 public class CookiesRecipesApp
 {
@@ -32,9 +68,7 @@ public class CookiesRecipesApp
         {
             var recipe = new Recipe(ingredients);
             allRecipes.Add(recipe);
-            /*
             _recipesRepository.Write(filePath, allRecipes);
-            */
 
             _recipesUserInteraction.ShowMessage("Recipe added:");
             _recipesUserInteraction.ShowMessage(recipe.ToString());
@@ -54,6 +88,7 @@ public class CookiesRecipesApp
 public interface IRecipesRepository
 {
     List<Recipe> Read(string filePath);
+    void Write(string filePath, List<Recipe> allRecipes);
 }
 
 public interface IRecipesUserInteraction
@@ -65,14 +100,12 @@ public interface IRecipesUserInteraction
     IEnumerable<Ingredient> ReadIngredientsFromUser();
 }
 
-
-
 public class RecipesConsoleUserInteraction: IRecipesUserInteraction
 {
-    private readonly IngredientsRegister _ingredientsRegister;
+    private readonly IIngredientsRegister _ingredientsRegister;
 
     public RecipesConsoleUserInteraction(
-        IngredientsRegister ingredientsRegister)
+        IIngredientsRegister ingredientsRegister)
     {
         _ingredientsRegister = ingredientsRegister;
     }
@@ -145,7 +178,13 @@ public class RecipesConsoleUserInteraction: IRecipesUserInteraction
     }
 }
 
-public class IngredientsRegister
+public interface IIngredientsRegister
+{
+    IEnumerable<Ingredient> All { get; }
+    Ingredient GetById(int id);
+}
+
+public class IngredientsRegister : IIngredientsRegister
 {
     public IEnumerable<Ingredient> All { get; } = new List<Ingredient>
     {
@@ -175,24 +214,114 @@ public class IngredientsRegister
 
 public class RecipesRepository: IRecipesRepository
 {
+    private readonly IStringsRepository _stringsRepository;
+    private readonly IIngredientsRegister _ingredientsRegister;
+    private const string Separator = ",";
+
+    public RecipesRepository(IStringsRepository stringsRepository, IIngredientsRegister ingredientsRegister)
+    {
+        _stringsRepository = stringsRepository;
+        _ingredientsRegister = ingredientsRegister;
+    }
     public List<Recipe> Read(string filePath)
     {
-        return new List<Recipe>
+        List<string> recipesFromFile = _stringsRepository.Read(filePath);
+        var recipes = new List<Recipe>();
+
+        foreach (var recipeFromFile in recipesFromFile)
         {
-            new Recipe(new List<Ingredient>
+            var recipe = RecipeFromString(recipeFromFile);
+            recipes.Add(recipe);
+        }
+
+        return recipes;
+    }
+
+    private Recipe RecipeFromString(string recipeFromFile)
+    {
+        var textualIds = recipeFromFile.Split(Separator);
+        var ingredients = new List<Ingredient>();
+
+        foreach (var textualId in textualIds)
+        {
+            var id = int.Parse(textualId);
+            var ingredient = _ingredientsRegister.GetById(id);
+            ingredients.Add(ingredient);
+        }
+
+        return new Recipe(ingredients);
+    }
+
+    public void Write(string filePath, List<Recipe> allRecipes)
+    {
+        var recipesAsString = new List<string>();
+
+        foreach (var recipe in allRecipes)
+        {
+            var allIds = new List<int>();
+
+            foreach (var ingredient in recipe.Ingredients)
             {
-                new WheatFlour(),
-                new Butter(),
-                new Sugar()
-            }),
-            new Recipe(new List<Ingredient>
-            {
-                new CocoaPowder(),
-                new SpeltFlour(),
-                new Cinnamon()
-            })
-        };
+                allIds.Add(ingredient.Id);
+            }
+            recipesAsString.Add(string.Join(Separator, allIds));
+
+        }
+        _stringsRepository.Write(filePath, recipesAsString);
     }
 }
 
 
+public interface IStringsRepository
+{
+    List<string> Read(string filePath);
+
+    void Write(
+        string filePath, List<string> names);
+}
+
+public class StringsTextualRepository : IStringsRepository
+{
+    private static readonly string Separator = Environment.NewLine;
+
+    public List<string> Read(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            var fileContents = File.ReadAllText(filePath);
+            return fileContents.Split(Separator).ToList();
+        }
+
+        return new List<string>();
+    }
+
+    public void Write(
+        string filePath, List<string> names)
+    {
+        File.WriteAllText(
+            filePath,
+            string.Join(Separator, names));
+    }
+}
+
+public class StringsJsonRepository : IStringsRepository
+{
+    public List<string> Read(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            var fileContents = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<List<string>>(fileContents);
+        }
+
+        return new List<string>();
+    }
+
+    public void Write(
+        string filePath, List<string> strings)
+    {
+        File.WriteAllText(
+            filePath,
+            JsonSerializer.Serialize(strings));
+    }
+}
