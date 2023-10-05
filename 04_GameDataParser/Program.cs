@@ -15,45 +15,40 @@ catch (Exception e)
     logger.Log(e);
 }
 
-
 public class GameDataParserApp
 {
     public void Run()
     {
-        var isFileReaded = false;
-        // string fileContents = default;
-        var fileContents = default(string);
-        var fileName = default(string);
-        
-        do
+        var fileName = ReadValidFilePathFromUser();
+
+        var fileContents = File.ReadAllText(fileName);
+
+        var videoGames = DesecializeVideoGamesFrom(fileContents, fileName);
+
+        PrintGames(videoGames);
+
+        Console.ReadKey();
+    }
+
+    private static void PrintGames(List<VideoGame> videoGames)
+    {
+        if (videoGames.Count > 0)
         {
-            try
-            {
-                Console.WriteLine("Enter the name of the file you want to read:");
-                fileName = Console.ReadLine();
-                fileContents = File.ReadAllText(fileName);
-                isFileReaded = true;
-            }
-            catch (ArgumentNullException e)
-            {
-                Console.WriteLine("The file name can not null.");
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine("The file name can not empty.");
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine("The file not found.");
-            }
-        } while (!isFileReaded);
-        
-        
-        List<VideoGame> videoGames = default;
-        
+            Console.WriteLine();
+            Console.WriteLine("Loaded games are:");
+            foreach (var videoGame in videoGames) Console.WriteLine(videoGame);
+        }
+        else
+        {
+            Console.WriteLine("No found in this input file.");
+        }
+    }
+
+    private static List<VideoGame> DesecializeVideoGamesFrom(string fileContents, string fileName)
+    {
         try
         {
-            videoGames = JsonSerializer.Deserialize<List<VideoGame>>(fileContents);
+            return JsonSerializer.Deserialize<List<VideoGame>>(fileContents);
         }
         catch (JsonException e)
         {
@@ -63,21 +58,41 @@ public class GameDataParserApp
             Console.WriteLine(fileContents);
             Console.ForegroundColor = originalColor;
             throw new JsonException($"{e.Message} The file is: {fileName}", e);
-        }
-        
-        if (videoGames.Count > 0)
+        } 
+    }
+
+    private static string ReadValidFilePathFromUser()
+    {
+        var isFileReaded = false;
+        // string fileName = default;
+        var fileName = default(string);
+
+        do
         {
-            Console.WriteLine();
-            Console.WriteLine("Loaded games are:");
-            foreach (var videoGame in videoGames) Console.WriteLine(videoGame);
-        }
-        
-        
-        Console.ReadKey();
+            Console.WriteLine("Enter the name of the file you want to read:");
+            fileName = Console.ReadLine();
+
+            if (fileName is null)
+            {
+                Console.WriteLine("The file name can not null.");
+            }
+            else if (fileName == string.Empty)
+            {
+                Console.WriteLine("The file name can not empty.");
+            }
+            else if (!File.Exists(fileName))
+            {
+                Console.WriteLine("The file not found.");
+            }
+            else
+            {
+                isFileReaded = true;
+            }
+        } while (!isFileReaded);
+
+        return fileName;
     }
 }
-
-
 
 
 public class VideoGame
