@@ -23,7 +23,7 @@ public class GameDataParserApp
 
         var fileContents = File.ReadAllText(fileName);
 
-        var videoGames = DesecializeVideoGamesFrom(fileContents, fileName);
+        var videoGames = DeserializeVideoGamesFrom(fileContents, fileName);
 
         PrintGames(videoGames);
 
@@ -44,7 +44,7 @@ public class GameDataParserApp
         }
     }
 
-    private static List<VideoGame> DesecializeVideoGamesFrom(string fileContents, string fileName)
+    private static List<VideoGame> DeserializeVideoGamesFrom(string fileContents, string fileName)
     {
         try
         {
