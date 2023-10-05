@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_CookiesCookbook", "03_Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_Exceptions", "04_Exceptions\04_Exceptions.csproj", "{E9E427B2-9198-48FC-A3AF-0978256B2E76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_GameDataParser", "04_GameDataParser\04_GameDataParser.csproj", "{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{E9E427B2-9198-48FC-A3AF-0978256B2E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9E427B2-9198-48FC-A3AF-0978256B2E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9E427B2-9198-48FC-A3AF-0978256B2E76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
