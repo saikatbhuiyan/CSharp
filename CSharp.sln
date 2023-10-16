@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_Exceptions", "04_Excepti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_GameDataParser", "04_GameDataParser\04_GameDataParser.csproj", "{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_GenericTypesAndAdvancesUseOfMethods", "05_GenericTypesAndAdvancesUseOfMethods\05_GenericTypesAndAdvancesUseOfMethods.csproj", "{961B07CF-689D-4051-8457-AA6DAD2414E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +68,9 @@ Global
 		{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0052F8E-DCF2-4E19-AD5C-D4222C599D2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{961B07CF-689D-4051-8457-AA6DAD2414E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{961B07CF-689D-4051-8457-AA6DAD2414E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{961B07CF-689D-4051-8457-AA6DAD2414E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{961B07CF-689D-4051-8457-AA6DAD2414E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
